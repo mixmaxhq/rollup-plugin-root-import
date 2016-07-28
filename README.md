@@ -1,18 +1,18 @@
 rollup-plugin-root-import
 =========================
 
-Add the ability to import modules by the root path, like Meteor.
+Add the ability to import modules by the root path, like [babel-root-slash-import](https://github.com/mantrajs/babel-root-slash-import).
 
 [![Build Status](https://travis-ci.org/mixmaxhq/rollup-plugin-root-import.svg?branch=master)](https://travis-ci.org/mixmaxhq/rollup-plugin-root-import)
 
 ```js
-// import a module from a different part of the project tree
+// import a module relative to a specified root directory
 import UserModel from '/models/user';
 
 // illustrative - if we were in /views/user, we can reference a model's module
 // using an absolute path from the root of the project, rather than relative to
 // the current module
-class UserView extends Backbone.View {
+class UserView {
   // ...
 }
 ```
@@ -45,6 +45,25 @@ rollup({
   ]
 });
 ```
+
+API
+---
+
+### rootImport([options])
+
+Creates a rollup plugin to resolve absolute-pathed imports relative to the project's entry or
+specified root directory/ies.
+
+Options:
+
+- `root` an optional string or ordered array of strings, which represent the roots from which to try
+  and resolve imports.
+- `useEntry` if provided, should be either `'prepend'` or `'append'`, where each signify that the
+  directory containing the entry should be prepended or appended to the array of roots,
+  respectively. By default, if `root` is provided and `useEntry` is not provided, the directory of
+  the `entry` module will not be used to resolve absolute-pathed imports.
+- `extensions`, if provided, specifies a string or ordered array of strings, each of which
+  represents an extension to append to the resolved file if the import isn't found verbatim.
 
 License
 -------
