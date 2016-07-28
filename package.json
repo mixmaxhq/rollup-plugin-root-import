@@ -1,0 +1,37 @@
+{
+  "name": "rollup-plugin-root-import",
+  "version": "0.1.0",
+  "description": "Add the ability to import modules by the root path, like Meteor",
+  "main": "dist/index.js",
+  "jsnext:main": "dist/index.es2015.js",
+  "scripts": {
+    "build": "rollup -c",
+    "test": "mocha",
+    "pretest": "npm run build",
+    "prebuild": "rm -rf dist",
+    "prepublish": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mixmaxhq/rollup-plugin-root-import.git"
+  },
+  "keywords": [
+    "rollup-plugin"
+  ],
+  "files": [
+    "dist"
+  ],
+  "author": "Eli Skeggs <me@eliskeggs.com> (https://eliskeggs.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mixmaxhq/rollup-plugin-root-import/issues"
+  },
+  "homepage": "https://github.com/mixmaxhq/rollup-plugin-root-import#readme",
+  "devDependencies": {
+    "babel-preset-es2015-rollup": "^1.1.1",
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3",
+    "rollup": "^0.34.1",
+    "rollup-plugin-babel": "^2.6.1"
+  }
+}
