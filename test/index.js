@@ -83,6 +83,17 @@ describe('rollup-plugin-root-import', function() {
     });
   });
 
+  it('should not try to import relative to itself', function(done) {
+    run('/main.js', null, (err) => {
+      // We're depending reasonable, yet implicit, behavior: we expect rollup to
+      // fail on a missing entry.
+      expect(err).to.be.an('error');
+      expect(err).to.have.property('message');
+      expect(err.message).to.match(/^Could not (?:load|resolve)/);
+      done();
+    });
+  });
+
   it('should not import from a bad location', function(done) {
     run('fixtures/basic/main.js', {
       root: path.join(__dirname, 'doesnotexist')
