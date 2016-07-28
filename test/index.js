@@ -1,7 +1,10 @@
-var expect = require('chai').expect;
+var chai = require('chai');
 var path = require('path');
 var rollup = require('rollup');
 var rootImport = require('..');
+
+chai.config.includeStack = true;
+var expect = chai.expect;
 
 function after(n, cb) {
   var done = false;
@@ -12,27 +15,45 @@ function after(n, cb) {
   };
 }
 
-function run(entry, options, done) {
-  rollup.rollup({
-    entry: path.resolve(__dirname, entry),
+function runRollup(entry, options) {
+  return rollup.rollup({
+    entry,
     plugins: [
       rootImport(options)
     ],
     onwarn() {}
   }).then((bundle) => {
-    const code = bundle.generate({
+    return bundle.generate({
       format: 'cjs'
     }).code;
-    var module = {};
+  });
+}
+
+function runModule(code) {
+  var module = {};
+  function require(module) {
+    var err = new Error('module was not resolved');
+    err.module = path.resolve(__dirname, module);
+    throw err;
+  }
+
+  const fn = new Function('expect', 'module', 'require', code);
+  fn(expect, module, require);
+  return module.exports;
+}
+
+function run(entry, options, done) {
+  var entryPath = entry[0] === '/' ? entry : path.resolve(__dirname, entry);
+  runRollup(entryPath, options).then((code) => {
+    var value;
     try {
-      const fn = new Function('expect', 'module', code);
-      value = fn(expect, module);
+      value = runModule(code);
     } catch (err) {
       setImmediate(() => done(err));
       return;
     }
-    setImmediate(() => done(null, module.exports));
-  });
+    setImmediate(() => done(null, value));
+  }).catch((err) => setImmediate(() => done(err)));
 }
 
 describe('rollup-plugin-root-import', function() {
