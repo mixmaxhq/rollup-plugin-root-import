@@ -73,7 +73,12 @@ describe('rollup-plugin-root-import', function() {
     run('fixtures/basic/main.js', {
       root: path.join(__dirname, 'doesnotexist')
     }, (err) => {
+      // Since it doesn't exist, rollup will generate a require call to try and
+      // load the module at runtime. Our require implementation throws an error
+      // and we'll check for that here.
       expect(err).to.be.an('error');
+      expect(err).to.have.property('message', 'module was not resolved');
+      expect(err).to.have.property('module', '/dir/thing.js');
       done();
     });
   });
@@ -81,6 +86,8 @@ describe('rollup-plugin-root-import', function() {
   it('should not import without extension', function(done) {
     run('fixtures/extension/main.js', null, (err) => {
       expect(err).to.be.an('error');
+      expect(err).to.have.property('message', 'module was not resolved');
+      expect(err).to.have.property('module', '/thing');
       done();
     });
   });
