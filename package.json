@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-root-import",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Add the ability to import modules by the root path, like Meteor",
   "main": "dist/index.js",
   "jsnext:main": "dist/index.es2015.js",
