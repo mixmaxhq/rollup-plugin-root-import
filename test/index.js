@@ -69,6 +69,20 @@ describe('rollup-plugin-root-import', function() {
     }, done);
   });
 
+  it('should resolve entry using root', function(done) {
+    run('/main', {
+      root: path.join(__dirname, 'fixtures/basic'),
+      extensions: '.js'
+    }, done);
+  });
+
+  it('should still resolve absolutely', function(done) {
+    run(path.join(__dirname, 'fixtures/flat/main.js'), null, (err, value) => {
+      expect(value).to.equal('no imports');
+      done();
+    });
+  });
+
   it('should not import from a bad location', function(done) {
     run('fixtures/basic/main.js', {
       root: path.join(__dirname, 'doesnotexist')
