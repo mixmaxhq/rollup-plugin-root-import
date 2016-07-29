@@ -1,7 +1,10 @@
 var chai = require('chai');
+var sinon = require('sinon');
 var path = require('path');
 var rollup = require('rollup');
-var rootImport = require('..');
+var rewire = require('rewire');
+
+var rootImport = rewire('..');
 
 chai.config.includeStack = true;
 var expect = chai.expect;
@@ -58,6 +61,22 @@ function run(entry, options, done) {
 
 describe('rollup-plugin-root-import', function() {
   this.timeout(500);
+
+  var oldResolve, resolve;
+
+  before(function() {
+    oldResolve = rootImport.__get__('resolve');
+    resolve = sinon.spy(oldResolve);
+    rootImport.__set__('resolve', resolve);
+  });
+
+  afterEach(function() {
+    resolve.reset();
+  });
+
+  after(function() {
+    rootImport.__set__('resolve', oldResolve);
+  });
 
   it('should import from root', function(done) {
     run('fixtures/basic/main.js', null, done);
@@ -212,6 +231,18 @@ describe('rollup-plugin-root-import', function() {
       if (err) done(err);
       else {
         expect(value).to.equal('extra');
+        done();
+      }
+    });
+  });
+
+  it('should cache old imports', function(done) {
+    run('/main.js', {
+      root: path.join(__dirname, 'fixtures/multi')
+    }, (err) => {
+      if (err) done(err);
+      else {
+        expect(resolve.callCount).to.equal(3);
         done();
       }
     });
