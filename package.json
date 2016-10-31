@@ -28,7 +28,8 @@
   },
   "homepage": "https://github.com/mixmaxhq/rollup-plugin-root-import#readme",
   "devDependencies": {
-    "babel-preset-es2015-rollup": "^1.1.1",
+    "babel-plugin-external-helpers": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0",
     "chai": "^3.5.0",
     "mocha": "^2.5.3",
     "rewire": "^2.5.2",

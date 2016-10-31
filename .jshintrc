@@ -1,0 +1,19 @@
+{
+  // If you are using SublimeLinter, after modifying this config file, be sure to close and reopen
+  // the file(s) you were editing to see the changes take effect.
+
+  // Prohibit the use of undeclared variables.
+  "undef": true,
+
+  // Suppress warnings about using [] notation when it can be expressed in dot notation,
+  // so that we can use [] notation to highlight when objects are used as maps.
+  "sub": true,
+
+  // Warn for unused variables and function parameters.
+  "unused": true,
+
+  // Make JSHint aware of Node globals.
+  "node": true,
+
+  "esnext": true
+}
