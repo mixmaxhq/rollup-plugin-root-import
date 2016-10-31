@@ -6,7 +6,17 @@ export default {
   entry: 'lib/index.js',
   plugins: [
     babel({
-      presets: ['es2015-rollup']
+      presets: [
+        [
+          'es2015',
+          {
+            modules: false
+          }
+        ]
+      ],
+      plugins: [
+        'external-helpers'
+      ]
     })
   ],
   targets: [
