@@ -35,8 +35,8 @@ rollup({
   entry: 'client/src/main.js',
   plugins: [
     rootImport({
-      // Will first look in client/src/* and then common/src/*
-      root: 'common/src',
+      // Will first look in `client/src/*` and then `common/src/*`.
+      root: `${__dirname}/common/src',
       useEntry: 'prepend',
 
       // If we don't find the file verbatim, try adding these extensions
@@ -57,7 +57,8 @@ specified root directory/ies.
 Options:
 
 - `root` an optional string or ordered array of strings, which represent the roots from which to try
-  and resolve imports.
+  and resolve imports. You should specify absolute paths (i.e. using `__dirname`) in order for
+  downstream Rollup plugins to match module IDs.
 - `useEntry` if provided, should be either `'prepend'` or `'append'`, where each signify that the
   directory containing the entry should be prepended or appended to the array of roots,
   respectively. By default, if `root` is provided and `useEntry` is not provided, the directory of
