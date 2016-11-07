@@ -36,7 +36,7 @@ rollup({
   plugins: [
     rootImport({
       // Will first look in `client/src/*` and then `common/src/*`.
-      root: `${__dirname}/common/src',
+      root: `${__dirname}/common/src`,
       useEntry: 'prepend',
 
       // If we don't find the file verbatim, try adding these extensions
