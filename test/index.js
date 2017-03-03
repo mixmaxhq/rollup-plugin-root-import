@@ -4,6 +4,7 @@ var sinon = require('sinon');
 var path = require('path');
 var rollup = require('rollup');
 var rewire = require('rewire');
+var multiEntry = require('rollup-plugin-multi-entry');
 
 var rootImport = rewire('..');
 
@@ -20,10 +21,12 @@ function after(n, cb) {
 }
 
 function runRollup(entry, options) {
+  options = options || {};
   return rollup.rollup({
     entry,
     plugins: [
-      rootImport(options)
+      rootImport(options),
+      ...(options.plugins || [])
     ],
     onwarn() {}
   }).then((bundle) => {
@@ -47,8 +50,10 @@ function runModule(code) {
 }
 
 function run(entry, options, done) {
-  var entryPath = entry[0] === '/' ? entry : path.resolve(__dirname, entry);
-  runRollup(entryPath, options).then((code) => {
+  if (typeof entry === 'string') {
+    entry = entry[0] === '/' ? entry : path.resolve(__dirname, entry);
+  }
+  runRollup(entry, options).then((code) => {
     var value;
     try {
       value = runModule(code);
@@ -81,6 +86,12 @@ describe('rollup-plugin-root-import', function() {
 
   it('should import from root', function(done) {
     run('fixtures/basic/main.js', null, done);
+  });
+
+  it('should not choke on exotic entries', function(done) {
+    run(['fixtures/basic/main.js'], {
+      plugins: [multiEntry()]
+    }, done);
   });
 
   it('should import from root', function(done) {
