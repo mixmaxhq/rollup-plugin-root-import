@@ -1,3 +1,4 @@
+/* jshint mocha: true */
 var chai = require('chai');
 var sinon = require('sinon');
 var path = require('path');
@@ -40,7 +41,7 @@ function runModule(code) {
     throw err;
   }
 
-  const fn = new Function('expect', 'module', 'require', code);
+  const fn = new Function('expect', 'module', 'require', code);  // jshint ignore: line
   fn(expect, module, require);
   return module.exports;
 }
