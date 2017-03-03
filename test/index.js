@@ -25,9 +25,8 @@ function runRollup(entry, options) {
   return rollup.rollup({
     entry,
     plugins: [
-      rootImport(options),
-      ...(options.plugins || [])
-    ],
+      rootImport(options)
+    ].concat(options.plugins || []),
     onwarn() {}
   }).then((bundle) => {
     return bundle.generate({
