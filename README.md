@@ -21,6 +21,10 @@ Install
 -------
 
 ```sh
+$ yarn add rollup-plugin-root-import
+```
+or
+```sh
 $ npm install --save-dev rollup-plugin-root-import
 ```
 
