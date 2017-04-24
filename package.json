@@ -7,9 +7,9 @@
   "scripts": {
     "build": "rollup -c",
     "test": "mocha",
-    "pretest": "npm run build",
+    "pretest": "yarn run build",
     "prebuild": "rm -rf dist",
-    "prepublish": "npm test"
+    "prepublish": "yarn test"
   },
   "repository": {
     "type": "git",
