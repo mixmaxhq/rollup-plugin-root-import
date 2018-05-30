@@ -7,9 +7,9 @@
   "scripts": {
     "build": "rollup -c",
     "test": "mocha",
-    "pretest": "yarn run build",
+    "pretest": "npm run build",
     "prebuild": "rm -rf dist",
-    "prepublish": "yarn test"
+    "prepublish": "npm test"
   },
   "repository": {
     "type": "git",
@@ -37,5 +37,8 @@
     "rollup-plugin-babel": "^2.6.1",
     "rollup-plugin-multi-entry": "^2.0.1",
     "sinon": "^1.17.5"
+  },
+  "engines": {
+    "yarn": "YARN NO LONGER USED - use npm instead."
   }
 }
