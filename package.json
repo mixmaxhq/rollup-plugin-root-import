@@ -37,8 +37,5 @@
     "rollup-plugin-babel": "^2.6.1",
     "rollup-plugin-multi-entry": "^2.0.1",
     "sinon": "^1.17.5"
-  },
-  "engines": {
-    "yarn": "YARN NO LONGER USED - use npm instead."
   }
 }
