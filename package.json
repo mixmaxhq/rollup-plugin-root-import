@@ -3,13 +3,16 @@
   "version": "0.2.4",
   "description": "Add the ability to import modules by the root path, like Meteor",
   "main": "dist/index.js",
-  "jsnext:main": "dist/index.es2015.js",
+  "module": "dist/index.mjs",
   "scripts": {
     "build": "rollup -c",
-    "test": "mocha",
-    "pretest": "npm run build",
+    "ci": "npm run lint && npm test",
+    "ci:commitlint": "commitlint-jenkins --pr-only",
+    "lint": "eslint .",
     "prebuild": "rm -rf dist",
-    "prepublish": "npm test"
+    "prepublishOnly": "npm run build && if [ \"$CI\" = '' ]; then node -p 'JSON.parse(process.env.npm_package_config_manualPublishMessage)'; exit 1; fi",
+    "semantic-release": "semantic-release",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -28,14 +31,39 @@
   },
   "homepage": "https://github.com/mixmaxhq/rollup-plugin-root-import#readme",
   "devDependencies": {
-    "babel-plugin-external-helpers": "^6.18.0",
-    "babel-preset-es2015": "^6.18.0",
-    "chai": "^3.5.0",
-    "mocha": "^2.5.3",
-    "rewire": "^2.5.2",
-    "rollup": "^0.34.1",
-    "rollup-plugin-babel": "^2.6.1",
-    "rollup-plugin-multi-entry": "^2.0.1",
-    "sinon": "^1.17.5"
+    "@babel/core": "^7.8.3",
+    "@babel/plugin-transform-modules-commonjs": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@mixmaxhq/commitlint-jenkins": "^1.4.2",
+    "@mixmaxhq/prettier-config": "^1.0.0",
+    "@mixmaxhq/semantic-release-config": "^2.0.0",
+    "cz-conventional-changelog": "^3.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-mixmax": "^4.7.0",
+    "jest": "^25.1.0",
+    "prettier": "^1.19.1",
+    "rollup": "^1.30.1",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-multi-entry": "^2.1.0",
+    "semantic-release": "^17.0.1"
+  },
+  "dependencies": {},
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    },
+    "manualPublishMessage": "This repository is configured to use semantic-release for its releases. Please do not release manually.\n"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release": {
+    "extends": "@mixmaxhq/semantic-release-config"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

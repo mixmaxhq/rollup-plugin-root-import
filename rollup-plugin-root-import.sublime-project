@@ -2,12 +2,12 @@
   "folders": [{
     "path": ".",
     "folder_exclude_patterns": [
-      "node_modules",
-      "dist"
+      "dist",
+      "node_modules"
     ],
     "file_exclude_patterns": [
-      // Yarn lock file
-      "yarn.lock"
+      // Lock file.
+      "package-lock.json"
     ]
   }],
   "settings": {
