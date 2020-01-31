@@ -1,5 +1,4 @@
-rollup-plugin-root-import
-=========================
+# rollup-plugin-root-import
 
 Add the ability to import modules by the root path, like [babel-root-slash-import](https://github.com/mantrajs/babel-root-slash-import).
 
@@ -17,22 +16,22 @@ class UserView {
 }
 ```
 
-Install
--------
+## Install
 
 ```sh
 $ yarn add rollup-plugin-root-import
 ```
+
 or
+
 ```sh
 $ npm install --save-dev rollup-plugin-root-import
 ```
 
-Usage
------
+## Usage
 
 ```js
-import {rollup} from 'rollup';
+import { rollup } from 'rollup';
 import rootImport from 'rollup-plugin-root-import';
 
 rollup({
@@ -41,17 +40,16 @@ rollup({
     rootImport({
       // Will first look in `client/src/*` and then `common/src/*`.
       root: `${__dirname}/common/src`,
-      useEntry: 'prepend',
+      useInput: 'prepend',
 
       // If we don't find the file verbatim, try adding these extensions
-      extensions: '.js'
-    })
-  ]
+      extensions: '.js',
+    }),
+  ],
 });
 ```
 
-API
----
+## API
 
 ### rootImport([options])
 
@@ -63,15 +61,14 @@ Options:
 - `root` an optional string or ordered array of strings, which represent the roots from which to try
   and resolve imports. You should specify absolute paths (i.e. using `__dirname`) in order for
   downstream Rollup plugins to match module IDs.
-- `useEntry` if provided, should be either `'prepend'` or `'append'`, where each signify that the
+- `useInput` if provided, should be either `'prepend'` or `'append'`, where each signify that the
   directory containing the entry should be prepended or appended to the array of roots,
-  respectively. By default, if `root` is provided and `useEntry` is not provided, the directory of
+  respectively. By default, if `root` is provided and `useInput` is not provided, the directory of
   the `entry` module will not be used to resolve absolute-pathed imports.
 - `extensions`, if provided, specifies a string or ordered array of strings, each of which
   represents an extension to append to the resolved file if the import isn't found verbatim.
 
-License
--------
+## License
 
 > The MIT License (MIT)
 >

@@ -1,32 +1,33 @@
 import babel from 'rollup-plugin-babel';
-
-var pkg = require('./package.json');
+import { builtinModules } from 'module';
+import pkg from './package.json';
 
 export default {
-  entry: 'lib/index.js',
+  input: 'lib/index.js',
+  external: builtinModules,
   plugins: [
     babel({
       presets: [
         [
-          'es2015',
+          '@babel/preset-env',
           {
-            modules: false
-          }
-        ]
+            targets: {
+              // The promisify export was added to the util module in 8.0.0
+              node: '8.0.0',
+            },
+          },
+        ],
       ],
-      plugins: [
-        'external-helpers'
-      ]
-    })
+    }),
   ],
-  targets: [
+  output: [
     {
       format: 'cjs',
-      dest: pkg['main']
+      file: pkg.main,
     },
     {
       format: 'es',
-      dest: pkg['jsnext:main']
-    }
-  ]
+      file: pkg.module,
+    },
+  ],
 };
