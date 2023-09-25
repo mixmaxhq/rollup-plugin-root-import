@@ -39,7 +39,7 @@
     "@mixmaxhq/commitlint-jenkins": "^1.4.2",
     "@mixmaxhq/git-hooks": "^1.0.1",
     "@mixmaxhq/prettier-config": "^1.0.0",
-    "@mixmaxhq/semantic-release-config": "^2.0.0",
+    "@mixmaxhq/semantic-release-config": "^3.0.2",
     "cz-conventional-changelog": "^3.1.0",
     "eslint": "^6.8.0",
     "eslint-config-mixmax": "^4.7.0",
